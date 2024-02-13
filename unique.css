@@ -1,0 +1,477 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+body {
+ 
+    font-weight: normal;
+    font-style: normal;
+  margin: 0;
+  padding: 0;
+  color: whitesmoke;
+  
+}
+
+.header {
+  margin: 36px 0 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+*, *::before, *::after { box-sizing:border-box }
+
+body {
+	margin:0;
+  padding: 0;
+  background:#0d0d0d;
+}
+
+
+
+.title {
+  font-weight: 600;
+  font-size: 46px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 12px;
+}
+
+.description {
+  text-align: center;
+  display: block;
+  margin-bottom: 0;
+  font-size: 20px;
+  max-width: 530px;
+}
+
+.upload-container {
+  max-width: 993px;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+.upload-wrapper {
+  padding: 8px;
+}
+
+.upload-btn {
+  margin-top: -10px;
+  margin-bottom: 22px;
+  font-weight: normal;
+}
+
+.upload-drag-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-drag-icon {
+  clear: both;
+}
+
+.upload-text {
+  font-weight: normal;
+  margin-bottom: 22px;
+}
+
+
+
+.features {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: -7%;
+  left: 280px;
+  z-index: 300;
+}
+
+.feature {
+  width: 323px;
+  height: 200px; 
+  margin-right: 12px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+ /* margin-bottom: 4%; */
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feature h2 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 4px 0 16px;
+}
+
+.feature-description {
+  text-align: justify;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.major_text{
+  position: relative;
+  bottom: 110px;
+}
+
+
+
+.additional-features {
+  display: flex;
+  flex-direction: row; /* Display additional features in a row */
+  justify-content: center; /* Center them horizontally */
+  align-items: center;
+}
+
+.additional-feature {
+  width: 323px;
+  margin-right: 12px; /* Add margin between additional features */
+}
+
+.additional-feature:last-child {
+  margin-right: 0; /* Remove margin for the last additional feature */
+}
+
+
+
+/* drag drop system */
+
+.form {
+  width: 500px;
+  margin: 5% auto; 
+  z-index: 10;
+}
+
+.form__container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border: 2px dashed silver;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: silver;
+  margin-bottom: 5px;
+  left: -280px;
+}
+
+.form__container.active {
+  background-color: rgba(255,255,255,0.2); 
+}
+
+.form__file {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  top: -206px;
+  left: -280px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.form__files-container {
+  display: flex;
+  width: 100%;
+  padding: 5px 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form__text {
+  font-size: 18px;
+  color: #333;
+  max-width: 450px;
+  
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.form__icon {
+  font-size: 22px;
+  color: #1871b5;
+  text-decoration: none;
+}
+
+.text-bar{
+  
+    position: relative;
+    width: 33%;
+    height: 200px;
+    border: 2px solid silver;
+    bottom: 482px;
+    font-size: 18px;
+    
+    margin-bottom: 5px;
+    left: 844px;
+    z-index: 300;
+  
+}
+
+.summary-bar{
+  
+  position: relative;
+  width: 43%;
+  height: 300px;
+  border: 2px solid silver;
+  bottom: 415px;
+  font-size: 18px;
+  
+  margin-bottom: 5px;
+  left: 459px;
+  z-index: 300;
+
+}
+
+
+
+
+
+
+
+
+.words{
+
+  /* z-index: 300; */
+  background-color: inherit;
+  width: 100%;
+  height: 100%;
+  color: silver;
+  font-size: large;
+  text-align: center;
+}
+
+
+
+
+
+
+
+/* background stuff  */
+
+@font-face {
+  font-family: "Mona Sans";
+  src: url("https://assets.codepen.io/64/Mona-Sans.woff2") format("woff2 supports variations"),
+       url("https://assets.codepen.io/64/Mona-Sans.woff2") format("woff2-variations");
+  font-weight: 100 1000;
+}
+
+@property --bg-1-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --bg-2-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --bg-2-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --bg-3-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --bg-3-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;  
+}
+
+:root {
+  --bg-color: hsl(240deg 10% 12%);
+  --bg-grain: url("https://assets.codepen.io/64/svgNoise2.svg");
+  --bg-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+  --shadow-size: max(140px, 40vw);
+  --shadow-size-fallback: 40vw;
+  --shadow-blur: 60;
+
+  --color-1: #6328da;
+  --color-2: #ff1bf1;
+  --color-3: #008cea;
+
+  --bg-1-x: 0;
+  --bg-1-y: 0;  
+  --bg-2-x: 0;
+  --bg-2-y: 0;
+  --bg-3-x: 0;
+  --bg-3-y: 0; 
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  :root {
+    --color-1: color(display-p3 0.36 0.17 0.82);
+    --color-2: color(display-p3 0.95 0.04 0.95);
+    --color-3: color(display-p3 0.01 0.53 0.99);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --shadow-size: max(72px, 25vw);
+    --shadow-size-fallback: 25vw;
+    --shadow-blur: 80;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  outline: calc(var(--debug) * 1px) dashed red;
+}
+
+*::before,
+*::after {
+  outline: calc(var(--debug) * 1px) dashed red; 
+}
+
+html,
+body {
+  width: 100%;
+  height: 125%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Mona Sans", sans-serif;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  background: var(--bg-color);
+  z-index: 1;
+  position: relative; 
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: radial-gradient(
+        circle var(--shadow-size, var(--shadow-size-fallback)) at 20vw 0,
+        var(--color-1, red) 100%,
+        transparent 0
+      ),
+      radial-gradient(
+        circle var(--shadow-size, var(--shadow-size-fallback)) at 100vw 0,
+        var(--color-2, red) 100%,
+        transparent 0
+      ),
+      radial-gradient(
+        circle calc(var(--shadow-size, var(--shadow-size-fallback)) * 1.2) at
+          50vw 115vh,
+        var(--color-3, red) 100%,
+        transparent 0
+      );
+
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  filter: blur(calc(var(--shadow-blur) * 1px));
+  mix-blend-mode: hue;
+}
+
+body::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  filter: contrast(145%) brightness(650%) invert(100%);
+  mix-blend-mode: screen;
+  background: var(--bg-grain);
+  background-size: 500px;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+main h1 {
+  color: white;
+  font-size: max(72px, 15vw);
+  mix-blend-mode: lighten;
+  font-weight: 650;
+  font-stretch: 110%;
+  letter-spacing: -0.04em;
+  background: var(--bg-grain),
+    conic-gradient(
+      from 140deg at calc(var(--bg-1-x) * 1%) 90%,
+      hsl(30deg 100% 5%),
+      hsl(238deg 100% 5%),
+      hsl(60deg 100% 99%),
+      hsl(248deg 100% 31%),
+      hsl(315deg 64% 51%),
+      hsl(25deg 95% 61%),
+      hsl(55deg 100% 75%),
+      hsl(60deg 100% 99%),
+      hsl(199deg 94% 74%),
+      hsl(236deg 95% 28%),
+      hsl(244deg 100% 4%)
+    ),
+    radial-gradient(
+      ellipse at calc(var(--bg-2-x) * 1%) calc(var(--bg-2-y) * 1%),
+      white 12%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at calc(var(--bg-3-x) * 1%) calc(var(--bg-3-y) * 1%),
+      hsl(212deg 94% 68%),
+      transparent 35%
+    );
+ 
+    background: 
+    var(--bg-grain),
+    conic-gradient(/*...*/),
+    radial-gradient(/*...*/),
+    radial-gradient(/*...*/);
+    
+    background-repeat: repeat;
+    background-size: 500px cover; /* Use 'cover' directly */
+    background-blend-mode: color-burn;
+    
+    
+    opacity: 1;
+    animation: bg 20s linear infinite alternate;
+}    

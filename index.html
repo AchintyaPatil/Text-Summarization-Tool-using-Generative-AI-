@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <link rel="stylesheet" href="unique.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.0.0/mammoth.browser.min.js"></script>
+    <title>Text Summarizer</title>
+    <meta name="next-head-count" content="4" />
+
+    
+</head>
+<body>
+
+        <div class="header">
+            <h1 class="title">Chat With Any Document</h1>
+            <p class="subtitle">Let's User get Summary from the document. </p>
+          </div>
+    </div>
+    
+
+    <form class="form">
+        <label class="form__container" id="upload-container">Choose & Drop Document Files</label>
+        <input class="form__file" id="upload-files" type="file" accept=".docx" multiple>
+        <div id="files-list-container"></div>
+      </form>
+
+<div class="text-bar">
+    <input class="words"   type="text"  placeholder="Type Your Text Here ">
+</div>
+
+
+
+
+<div id="processed-text" class="summary-bar">
+    <input class="words"   type="text"  placeholder="Summary box ">
+</div>
+    
+    
+
+
+
+
+
+
+
+      <!-- <div class="major_text">
+    <div style="display: flex; flex-direction: column; align-items: center" class="translate">
+        <h2 style="margin-top: 48px; margin-bottom: 8px">NIRMAL THE BITCH ASS BOIIIII OF OUR CLASSS LESSS GOOO</h2>
+        <span class="ant-typography ant-typography-secondary css-w8mnev" style="display: block; margin-bottom: 32px; font-size: 18px; text-align: center">Across borders, beyond languages: AI is revolutionizing the understanding of research worldwide</span>
+    </div>
+</div> -->
+
+    <div class="features">
+        <div class="feature">
+             <h2><i class="fas fa-search"></i>For Students</h2> 
+            <p>Prepare for exams, get help with homework and answer multiple choice questions.</p>
+        </div>
+        <div class="feature">
+            <h2><i class="fas fa-flask"></i>For Researchers</h2>
+            <p>Scientific papers, academic articles and books. Get the information you need for your research.</p>
+        </div>
+        <div class="feature">
+            <h2><i class="fa-regular fa-notebook"></i>For Professionals</h2>
+            <p>Legal contracts, financial reports, manuals and training material. Ask any question to any Document and get insights fast.</p>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+        const multipleEvents = (element, eventNames, listener) => {
+            const events = eventNames.split(' ');
+
+            events.forEach(event => {
+                element.addEventListener(event, listener, false);
+            });
+        };
+
+        const fileUpload = () => {
+            const INPUT_FILE = document.querySelector('#upload-files');
+            const INPUT_CONTAINER = document.querySelector('#upload-container');
+            const PROCESSED_TEXT_DIV = document.querySelector('#processed-text');
+
+            const showProcessedText = (processedText) => {
+                // Display the processed text in the designated div
+                PROCESSED_TEXT_DIV.textContent = processedText;
+            };
+
+            multipleEvents(INPUT_FILE, 'click dragstart dragover', () => {
+                INPUT_CONTAINER.classList.add('active');
+            });
+
+            multipleEvents(INPUT_FILE, 'dragleave dragend drop change', () => {
+                INPUT_CONTAINER.classList.remove('active');
+            });
+
+            INPUT_FILE.addEventListener('change', () => {
+                const files = [...INPUT_FILE.files];
+
+                files.forEach(file => {
+                    if (file.type === 'application/msword' || file.type ===
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                        const reader = new FileReader();
+
+                        reader.onload = function (event) {
+                            const arrayBuffer = event.target.result;
+                            const formData = new FormData();
+                            formData.append('file', new Blob([arrayBuffer]));
+
+                            // Send the file to the Flask server for text extraction and processing
+                            fetch('http://127.0.0.1:5000/process-text', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => {
+                                    // Check if the response status is OK (200) or not
+                                    if (response.ok) {
+                                        // Parse the JSON response
+                                        return response.json();
+                                    } else {
+                                        // If response status is not OK, handle it accordingly (e.g., throw an error)
+                                        throw new Error('Network response was not ok: ' + response.statusText);
+                                    }
+                                })
+                                .then(data => {
+                                    // Handle the JSON data here
+                                    const processedText = data.processedText;
+
+                                    // Call the function to display processed text
+                                    showProcessedText(processedText);
+                                })
+                                .catch(error => {
+                                    // Handle any errors that occurred during the fetch operation
+                                    console.error('Error:', error);
+                                });
+                        };
+
+                        reader.readAsArrayBuffer(file);
+                    } else {
+                        // Handle other file types if needed
+                        console.log('Unsupported file type:', file.type);
+                    }
+                });
+            });
+        };
+
+        fileUpload();
+    </script>
+
+
+    </body>
+    </html>
+    
