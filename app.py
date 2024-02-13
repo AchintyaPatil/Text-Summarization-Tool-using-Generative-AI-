@@ -67,4 +67,4 @@ def process_text():
         return jsonify({'message': 'Endpoint is accessible.'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
