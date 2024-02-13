@@ -38,7 +38,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load Flan-T5 model
-flan_t5_model_id = "google/flan-t5-base"
+flan_t5_model_id = "google/flan-t5-small"
 flan_t5_tokenizer = AutoTokenizer.from_pretrained(flan_t5_model_id)
 flan_t5_model = AutoModelForSeq2SeqLM.from_pretrained(flan_t5_model_id)
 
