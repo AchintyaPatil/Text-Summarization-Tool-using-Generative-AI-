@@ -1,4 +1,6 @@
-import requests
+import streamlit as st
+with open('unique.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 from flask import Flask, request, jsonify
 import nltk
 nltk.download('punkt')
@@ -8,9 +10,37 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import mammoth
 from flask_cors import CORS
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from rouge_score import rouge_scorer
+
+import streamlit.components.v1 as components
+# st.components.v1.html(index.html, width=None, height=None, scrolling=False)
+
+
+# >>> import plotly.express as px
+# >>> fig = px.box(range(10))
+# >>> fig.write_html('test.html')
+
+# st.header("test html import")
+
+HtmlFile = open("index.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read() 
+print(source_code)
+components.html(source_code)
+
+# path_to_html = "./index.html" 
+
+# # Read file and keep in variable
+# with open(path_to_html,'r') as f: 
+#     html_data = f.read()
 
 app = Flask(__name__)
 CORS(app)
+
+# Load Flan-T5 model
+flan_t5_model_id = "google/flan-t5-base"
+flan_t5_tokenizer = AutoTokenizer.from_pretrained(flan_t5_model_id)
+flan_t5_model = AutoModelForSeq2SeqLM.from_pretrained(flan_t5_model_id)
 
 def extract_text_from_docx_with_mammoth(file):
     result = mammoth.extract_raw_text(file)
@@ -36,6 +66,20 @@ def textrank_summary(text, num_sentences=5):
     ranked_sentences = [sentences[i] for i in np.argsort(scores)[::-1][:num_sentences]]
     return ' '.join(ranked_sentences)
 
+def summarize_with_flan_t5(text):
+    inputs = flan_t5_tokenizer.encode("summarize: " + text, return_tensors="pt", max_length=1024, truncation=True)
+    outputs = flan_t5_model.generate(inputs, max_length=150, num_beams=4, length_penalty=2.0, early_stopping=True)
+    return flan_t5_tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+def combine_summaries(summary1, summary2):
+    # Combine summaries using concatenation
+    return summary1 + " " + summary2
+
+def calculate_rouge_scores(reference, hypothesis):
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
+    scores = scorer.score(reference, hypothesis)
+    return scores
+
 @app.route('/process-text', methods=['POST'])
 def process_text():
     if request.method == 'POST':
@@ -43,27 +87,34 @@ def process_text():
             docx_file = request.files['file']
             extracted_text = extract_text_from_docx_with_mammoth(docx_file)
 
-            # Log the extracted text to the console
-            print("Extracted Text:", extracted_text)
+            # Generate summaries using Flan-T5 and TextRank
+            flan_t5_summary = summarize_with_flan_t5(extracted_text)
+            tr_summary = textrank_summary(extracted_text)  # Rename the variable
 
-            # Perform TextRank-based summarization
-            summarized_text = textrank_summary(extracted_text)
+            # Combine summaries using your preferred method
+            combined_summary = combine_summaries(flan_t5_summary, tr_summary)
 
-            # Log the summarized text to the console
-            print("Summarized Text:", summarized_text)
+            # Calculate ROUGE scores
+            tr_scores = calculate_rouge_scores(extracted_text, tr_summary)
+            combined_scores = calculate_rouge_scores(extracted_text, combined_summary)
 
-            # Respond back to the JavaScript frontend with the processed text
+            # Print the ROUGE scores
+            print("TextRank ROUGE Scores:", tr_scores)
+            print("Combined ROUGE Scores:", combined_scores)
+
+            # Respond with the combined summary
             response_data = {
-                'processedText': 'Summarized Text: ' + summarized_text  # Modify this line based on your processing logic
+                'processedText': combined_summary,
+                'rougeScores': {
+                    'TextRank': tr_scores,
+                    'Combined': combined_scores
+                }
             }
             return jsonify(response_data)
         except Exception as e:
-            # Handle any errors that might occur during text extraction or processing
             print("Error:", str(e))
             return jsonify({'error': 'An error occurred during text processing.'})
     else:
-        # Handle GET request (if needed)
-        # For example, you can return a message indicating that the endpoint is accessible
         return jsonify({'message': 'Endpoint is accessible.'})
 
 if __name__ == '__main__':
