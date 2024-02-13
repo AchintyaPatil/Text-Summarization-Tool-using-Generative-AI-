@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 with open('unique.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 from flask import Flask, request, jsonify
@@ -13,7 +14,7 @@ from flask_cors import CORS
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from rouge_score import rouge_scorer
 
-import streamlit.components.v1 as components
+
 # st.components.v1.html(index.html, width=None, height=None, scrolling=False)
 
 
