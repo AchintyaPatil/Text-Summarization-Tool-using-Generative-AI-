@@ -664,7 +664,7 @@ main h1 {
 
     </body>
     </html>
-    """,height=600
+    """,width=768,height=600
     
     
     
