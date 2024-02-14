@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
-# with open('unique.css') as f:
-#     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+with open('unique.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 from flask import Flask, request, jsonify
 import nltk
 nltk.download('punkt')
@@ -664,10 +664,7 @@ main h1 {
 
     </body>
     </html>
-    """,width=100%,height=100%
-    
-    
-    
+    """,width=1000,height=1000,scrolling=True   
 )
 # HtmlFile = open("index.html", 'r', encoding='utf-8')
 # source_code = HtmlFile.read() 
