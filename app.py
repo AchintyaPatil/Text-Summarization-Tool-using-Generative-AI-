@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_metrics import Counter, Gauge, Histogram
 import streamlit.components.v1 as components
 with open('unique.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -13,6 +14,58 @@ import mammoth
 from flask_cors import CORS
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from rouge_score import rouge_scorer
+
+# Metrics for tracking processing times
+model_inference_time = Gauge(name="model_inference_time", documentation="Time taken for model inference")
+preprocessing_time = Gauge(name="preprocessing_time", documentation="Time spent on text preprocessing")
+postprocessing_time = Gauge(name="postprocessing_time", documentation="Time spent on summarizing output")
+
+# Metrics for tracking model performance
+rogue_score = Gauge(name="rogue_score", documentation="ROUGE score of generated summary")
+bleu_score = Gauge(name="bleu_score", documentation="BLEU score of generated summary")
+distinct_n_grams = Counter(name="distinct_n_grams", documentation="Number of distinct n-grams in summary")
+
+# Metrics for tracking user interaction
+input_text_length = Gauge(name="input_text_length", documentation="Length of input text in characters")
+summary_length = Gauge(name="summary_length", documentation="Length of generated summary in characters")
+num_summarization_requests = Counter(name="num_summarization_requests", documentation="Total number of summarization requests")
+
+# Example usage
+def process_text(text):
+    # Simulate preprocessing (replace with your actual code)
+    start_preprocessing = time.time()
+    preprocessed_text = text.lower().strip()
+    preprocessing_time.set(time.time() - start_preprocessing)
+
+    # Simulate model inference (replace with your actual model call)
+    start_inference = time.time()
+    summary = "This is a generated summary."  # Replace with actual summary from your model
+    model_inference_time.set(time.time() - start_inference)
+
+    # Simulate postprocessing (replace with your actual code)
+    start_postprocessing = time.time()
+    summary = f"Summary: {summary}"  # Add formatting or context
+    postprocessing_time.set(time.time() - start_postprocessing)
+
+    # Calculate and set performance metrics (replace with actual calculation)
+    rogue_score.set(0.5)  # Replace with actual ROUGE score
+    bleu_score.set(0.3)  # Replace with actual BLEU score
+    distinct_n_grams.inc(len(set(summary.split())))
+
+    return summary
+
+if st.button("Summarize Text"):
+    input_text = st.text_area("Enter text to summarize:")
+    start_request = time.time()
+    if input_text:
+        input_text_length.set(len(input_text))
+        summary = process_text(input_text)
+        summary_length.set(len(summary))
+        st.success(summary)
+    num_summarization_requests.inc()
+    end_request = time.time()
+    # Additional metrics for debugging or analysis (optional)
+    # total_request_time.set(end_request - start_request)
 
 
 # st.components.v1.html(index.html, width=None, height=None, scrolling=False)
