@@ -4,8 +4,8 @@ import streamlit as st
 # import collections
 # import promlib
 import streamlit.components.v1 as components
-with open('unique.css') as f:
-    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+# with open('unique.css') as f:
+#     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 from flask import Flask, request, jsonify
 import nltk
 nltk.download('punkt')
