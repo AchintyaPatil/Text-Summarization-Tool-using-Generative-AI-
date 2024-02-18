@@ -14,10 +14,7 @@ from flask_cors import CORS
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from rouge_score import rouge_scorer
 
-import streamlit_exporter
 
-# Exporter configuration (optional, refer to the package's documentation)
-st_exporter = streamlit_exporter.StreamlitExporter(target_type="local_server", port=9092)
 
 # # Metrics for tracking processing times
 # model_inference_time = Gauge(name="model_inference_time", documentation="Time taken for model inference")
