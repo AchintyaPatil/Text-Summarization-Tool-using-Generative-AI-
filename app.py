@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_metrics
 from streamlit_metrics import Counter, Gauge, Histogram
 import streamlit.components.v1 as components
 with open('unique.css') as f:
