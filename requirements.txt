@@ -67,6 +67,7 @@ sortedcontainers==2.4.0
 soupsieve==2.5
 steamfront==0.1.0
 streamlit
+streamlit_metrics
 sympy==1.12
 threadpoolctl==3.2.0
 tokenizers==0.15.0
