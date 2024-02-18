@@ -521,7 +521,7 @@ main h1 {
 </style>
 </head>
 <body>
-
+        <div>
         <div class="header">
             <h1 class="title">Chat With Any Document</h1>
             <p class="subtitle">Let's User get Summary from the document. </p>
@@ -575,7 +575,7 @@ main h1 {
             <p>Legal contracts, financial reports, manuals and training material. Ask any question to any Document and get insights fast.</p>
         </div>
     </div>
-
+    </div>
 
 
 
