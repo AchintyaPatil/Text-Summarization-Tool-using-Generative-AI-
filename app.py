@@ -722,7 +722,7 @@ main h1 {
 
     </body>
     </html>
-    """,width=1000,height=1000,scrolling=True   
+    """,width=1000,height=1000 
 )
 
 REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request Latency',
