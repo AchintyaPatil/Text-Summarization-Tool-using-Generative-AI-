@@ -784,6 +784,19 @@ def calculate_rouge_scores(reference, hypothesis):
     scores = scorer.score(reference, hypothesis)
     return scores
 
+REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request Latency',
+                           ['method', 'endpoint'])
+REQUEST_COUNT = Counter('request_count', 'Request Count',
+                        ['method', 'endpoint', 'http_status'])
+ERROR_COUNT = Counter('error_count', 'Error Count',
+                      ['method', 'endpoint'])
+
+@app.route('/metrics', methods=['GET'])
+
+def metrics():
+    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
+
+
 @app.route('/process-text', methods=['POST'])
 def process_text():
     if request.method == 'POST':
@@ -824,14 +837,4 @@ def process_text():
 if __name__ == '__main__':
     app.run()
 
-REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request Latency',
-                           ['method', 'endpoint'])
-REQUEST_COUNT = Counter('request_count', 'Request Count',
-                        ['method', 'endpoint', 'http_status'])
-ERROR_COUNT = Counter('error_count', 'Error Count',
-                      ['method', 'endpoint'])
-
-@app.route('/metrics', methods=['GET'])
-def metrics():
-    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
 
