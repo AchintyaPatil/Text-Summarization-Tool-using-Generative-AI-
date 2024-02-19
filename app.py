@@ -1,4 +1,5 @@
 import streamlit as st
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 # import time
 # import psutil
 # import collections
@@ -723,6 +724,19 @@ main h1 {
     </html>
     """,width=1000,height=1000,scrolling=True   
 )
+
+REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request Latency',
+                           ['method', 'endpoint'])
+REQUEST_COUNT = Counter('request_count', 'Request Count',
+                        ['method', 'endpoint', 'http_status'])
+ERROR_COUNT = Counter('error_count', 'Error Count',
+                      ['method', 'endpoint'])
+
+@app.route('/metrics', methods=['GET'])
+def metrics():
+    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
+
+
 # HtmlFile = open("index.html", 'r', encoding='utf-8')
 # source_code = HtmlFile.read() 
 # print(source_code)
