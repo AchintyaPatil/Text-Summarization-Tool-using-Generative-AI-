@@ -44,6 +44,7 @@ pdfplumber==0.7.5
 pefile==2023.2.7
 pikepdf==8.11.2
 Pillow==10.1.0
+prometheus_client
 pycparser==2.21
 PyHTML==1.3.2
 pyinstaller==6.3.0
