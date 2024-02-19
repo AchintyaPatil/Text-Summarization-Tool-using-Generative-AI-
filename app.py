@@ -725,16 +725,6 @@ main h1 {
     """,width=1000,height=1000 
 )
 
-REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request Latency',
-                           ['method', 'endpoint'])
-REQUEST_COUNT = Counter('request_count', 'Request Count',
-                        ['method', 'endpoint', 'http_status'])
-ERROR_COUNT = Counter('error_count', 'Error Count',
-                      ['method', 'endpoint'])
-
-@app.route('/metrics', methods=['GET'])
-def metrics():
-    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
 
 
 # HtmlFile = open("index.html", 'r', encoding='utf-8')
@@ -833,3 +823,15 @@ def process_text():
 
 if __name__ == '__main__':
     app.run()
+
+REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request Latency',
+                           ['method', 'endpoint'])
+REQUEST_COUNT = Counter('request_count', 'Request Count',
+                        ['method', 'endpoint', 'http_status'])
+ERROR_COUNT = Counter('error_count', 'Error Count',
+                      ['method', 'endpoint'])
+
+@app.route('/metrics', methods=['GET'])
+def metrics():
+    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
+
